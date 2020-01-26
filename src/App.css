@@ -1,38 +1,68 @@
 .App {
-  text-align: center;
+  padding: 24px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.add-worker {
+  display: block;
+  font-weight: bold;
   color: white;
+  padding: 6px 8px;
+  background-color: #439d49;
+  font-size: 20px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 8px #888888;
+  border: none;
+  margin-bottom: 24px;
+  outline: none;
 }
 
-.App-link {
-  color: #61dafb;
+.worker-item {
+  display: flex;
+  margin-bottom: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.element {
+  border-radius: 3px;
+  padding: 6px 8px;
+  border: 1px solid black;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.worker-number {
+  width: 32px;
+  align-self: flex-start;
+}
+
+.worker-type .element {
+  min-width: 135px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown {
+  position: absolute;
+  background-color: white;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 14px;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.dropdown li {
+  padding: 6px 8px;
+  min-width: 135px;
+}
+
+.dropdown li:hover {
+  background-color: #439d49;
+  cursor: pointer;
+}
+
+.worker-salary {
+  width: 175px;
 }
