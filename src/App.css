@@ -2,7 +2,7 @@
   padding: 24px;
 }
 
-.add-worker {
+button, input[type=submit] {
   display: block;
   font-weight: bold;
   color: white;
@@ -14,11 +14,13 @@
   border: none;
   margin-bottom: 24px;
   outline: none;
+  cursor: pointer;
 }
 
 .worker-item {
   display: flex;
   margin-bottom: 24px;
+
 }
 
 .element {
@@ -51,6 +53,7 @@
   font-size: 14px;
   border: 1px solid black;
   border-radius: 3px;
+  box-shadow: 0 4px 8px 2px #888888;
 }
 
 .dropdown li {
@@ -65,4 +68,44 @@
 
 .worker-salary {
   width: 175px;
+}
+
+.remove-worker {
+  background-color: #439d49;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  line-height: 18px;
+  align-self: center;
+}
+
+.remove-worker:hover {
+  cursor: pointer;
+}
+
+.current-expenditure {
+  margin-bottom: 24px;
+}
+
+.results div {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.action-buttons {
+  display: flex;
+}
+
+.action-buttons input {
+  margin-right: 8px;
+}
+
+.errors {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color: red;
 }
