@@ -11,6 +11,11 @@ const calculate = [
 ]
 
 const formatNumber = number => {
+  let negative;
+  if (number < 0) {
+    number = -number;
+    negative = true;
+  }
   const numberString = String(number);
   const resultArray = [];
   let i;
@@ -18,6 +23,7 @@ const formatNumber = number => {
     i = j - 3 < 0 ? 0 : j - 3;
     resultArray.unshift(numberString.slice(i,j));
   }
+  if (negative) resultArray[0] = '-' + resultArray[0].slice(0);
   return resultArray.join(",");
 }
 
@@ -155,18 +161,22 @@ export default class App extends React.Component {
                       </ul>
                     )}
                   </div>
+                  <span className="dollar-sign">$</span>
                   <input
                     className="worker-salary element"
                     value={workerItems[k]['salary']}
                     onChange={this.handleFieldChange(k, 'salary')}
-                    placeholder='Salary (numbers only)'
+                    placeholder='Salary'
                   />
-                  <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
-                    x
-                  </div>
+                  {k !== '1' &&
+                    <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
+                      x
+                    </div>
+                  }
                 </div>
               )
             })}
+            <span className="dollar-sign">$</span>
             <input
               className="current-expenditure element"
               value={this.state.currentExpenditure}

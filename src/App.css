@@ -20,7 +20,7 @@ button, input[type=submit] {
 .worker-item {
   display: flex;
   margin-bottom: 24px;
-
+  align-items: center;
 }
 
 .element {
@@ -29,6 +29,11 @@ button, input[type=submit] {
   border: 1px solid black;
   font-size: 16px;
   margin-right: 8px;
+}
+
+.dollar-sign {
+  position: relative;
+  left: 8px;
 }
 
 .worker-number {
@@ -68,6 +73,8 @@ button, input[type=submit] {
 
 .worker-salary {
   width: 175px;
+  padding-left: 20px;
+  margin-left: -10px;
 }
 
 .remove-worker {
@@ -78,7 +85,6 @@ button, input[type=submit] {
   height: 20px;
   width: 20px;
   line-height: 18px;
-  align-self: center;
 }
 
 .remove-worker:hover {
@@ -87,6 +93,8 @@ button, input[type=submit] {
 
 .current-expenditure {
   margin-bottom: 24px;
+  padding-left: 20px;
+  margin-left: -10px;
 }
 
 .results div {
