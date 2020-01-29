@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import campaign from './campaign.png';
 
 const calculate = [
   {lowerBound: 0, upperBound: 25000, baseCost: 0, rate: 0},
@@ -136,76 +137,94 @@ export default class App extends React.Component {
     const { workerItems, step, currentExpenditure, projectedExpenditure, totalPayroll, errors } = this.state;
     return (
       <div className="App">
-        <h1>Business Calculator</h1>
-        {step === 1 &&
-          <form onSubmit={this.handleSubmit}>
-            <button className="add-worker" onClick={this.handleAddWorker}>Add Worker</button>
-            {Object.keys(workerItems).map(k => {
-              return (
-                <div className="worker-item" key={k}>
-                  <input
-                    className="worker-number element"
-                    value={workerItems[k]['number']}
-                    onChange={this.handleFieldChange(k, 'number')}
-                    placeholder='#'
-                  />
-                  <div className="worker-type">
-                    <div className="element" onClick={this.handleOpenSelect(k)}>
-                      <span className="select-value">{workerItems[k]['type']}</span><span>&#9660;</span>
-                    </div>
-                    {workerItems[k].selectOpen && (
-                      <ul className="dropdown" onClick={this.handleTypeSelection(k)}>
-                        <li type="Worker-Owner">Worker-Owner</li>
-                        <li type="Employee">Employee</li>
-                        <li type="Owner">Owner</li>
-                      </ul>
-                    )}
-                  </div>
-                  <span className="dollar-sign">$</span>
-                  <input
-                    className="worker-salary element"
-                    value={workerItems[k]['salary']}
-                    onChange={this.handleFieldChange(k, 'salary')}
-                    placeholder='Salary'
-                  />
-                  {k !== '1' &&
-                    <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
-                      x
-                    </div>
-                  }
-                </div>
-              )
-            })}
-            <span className="dollar-sign">$</span>
-            <input
-              className="current-expenditure element"
-              value={this.state.currentExpenditure}
-              onChange={this.handleExpenditure}
-              placeholder='Current Expenditure'
-            />
-            <div className="action-buttons">
-              <input type="submit" value="Submit"/>
-              <button className="clear-form" onClick={this.clearForm}>Clear Form</button>
-            </div>
-            <ul className="errors">
-              {errors.map(error => {
+        <div className="content">
+          <div className="header">
+            <img src={campaign} alt="campaign"/>
+            <div>Business Savings Calculator</div>
+          </div>
+          {step === 1 &&
+            <form onSubmit={this.handleSubmit}>
+              <div>
+                This a calculator to help you estimate how much you would save on your business's healthcare coverage expenses
+                under the NYHA compared to what you pay today.
+              </div>
+              <h3>I. Personnel Annual Salaries</h3>
+              <div className="instructions">Please input all annual salaries for current personnel. Input the number of people
+              who are receiving the salary, choose type "Worker-Owner", "Owner", or "Employee" from the drop-down menu,
+              and input the salary with no commas or spaces. Click "Add Worker" for additional salary entries.</div>
+              <button className="add-worker" onClick={this.handleAddWorker}>Add Worker</button>
+              {Object.keys(workerItems).map(k => {
                 return (
-                  <li>{error}</li>
+                  <div className="worker-item" key={k}>
+                    <input
+                      className="worker-number element"
+                      value={workerItems[k]['number']}
+                      onChange={this.handleFieldChange(k, 'number')}
+                      placeholder='#'
+                    />
+                    <div className="worker-type">
+                      <div className="element" onClick={this.handleOpenSelect(k)}>
+                        <span className="select-value">{workerItems[k]['type']}</span><span>&#9660;</span>
+                      </div>
+                      {workerItems[k].selectOpen && (
+                        <ul className="dropdown" onClick={this.handleTypeSelection(k)}>
+                          <li type="Worker-Owner">Worker-Owner</li>
+                          <li type="Employee">Employee</li>
+                          <li type="Owner">Owner</li>
+                        </ul>
+                      )}
+                    </div>
+                    <span className="dollar-sign">$</span>
+                    <input
+                      className="worker-salary element"
+                      value={workerItems[k]['salary']}
+                      onChange={this.handleFieldChange(k, 'salary')}
+                      placeholder='Enter Salary'
+                    />
+                    {k !== '1' &&
+                      <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
+                        x
+                      </div>
+                    }
+                  </div>
                 )
               })}
-            </ul>
-          </form>
-        }
-        {step === 2 &&
-          <div className="results">
-            <div>Total Payroll: {`$${formatNumber(totalPayroll)}`}</div>
-            <div>Current Healthcare Expenditure: {`$${formatNumber(currentExpenditure)}`}</div>
-            <div>Projected Healthcare Expenditure: {`$${formatNumber(projectedExpenditure)}`}</div>
-            <div>Savings: {`$${formatNumber(currentExpenditure - projectedExpenditure)}`}</div>
-            <div>Effective Payroll Tax Rate: {`${(projectedExpenditure / totalPayroll * 100).toFixed(2)}%`}</div>
-            <button className="return" onClick={this.handleReturn}>Return to Form</button>
-          </div>
-        }
+              <h3>II. Current Annual Healthcare Expenditure</h3>
+              <div className="instructions">
+                Please input an estimate of all expenses put toward employee healthcare annually (no commas or spaces).
+                Don't forget to incude costs of time spent on evaluation, administration and maintenance.
+              </div>
+              <span className="dollar-sign">$</span>
+              <input
+                className="current-expenditure element"
+                value={this.state.currentExpenditure}
+                onChange={this.handleExpenditure}
+                placeholder='Enter Expenditure'
+              />
+              <div className="action-buttons">
+                <input type="submit" value="Submit"/>
+                <button className="clear-form" onClick={this.clearForm}>Clear Form</button>
+              </div>
+              <ul className="errors">
+                {errors.map(error => {
+                  return (
+                    <li>{error}</li>
+                  )
+                })}
+              </ul>
+            </form>
+          }
+          {step === 2 &&
+            <div className="results">
+              <div>Here's how much you currently spend on payroll annually: <b>{`$${formatNumber(totalPayroll)}`}</b></div>
+              <div>Here's how much you currently spend on your business's healthcare coverage annually: <b>{`$${formatNumber(currentExpenditure)}`}</b></div>
+              <div>Here's how much you would spend annually for your business's healthcare coverage under the NYHA: <b>{`$${formatNumber(projectedExpenditure)}`}</b></div>
+              <div>Here's how much you would save: <b>{`$${formatNumber(currentExpenditure - projectedExpenditure)}`}</b></div>
+              <div>Here's what your effective payroll tax for healthcare would be under the NYHA: <b>{`${(projectedExpenditure / totalPayroll * 100).toFixed(2)}%`}</b></div>
+              <button className="return" onClick={this.handleReturn}>Return to Form</button>
+            </div>
+          }
+        </div>
       </div>
     );
   }

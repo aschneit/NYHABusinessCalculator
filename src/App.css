@@ -1,8 +1,42 @@
 .App {
+  padding: 50px 100px 0;
+  background-color: #439d49;
+  min-height: 100%;
+}
+
+.content {
+  background-color: white;
   padding: 24px;
+  border-radius: 6px;
+}
+
+.header {
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 48px;
+  color: #cb0121;
+  display: flex;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header div {
+  width: 50%;
+}
+
+.header img {
+  width: 50%;
+  height: auto;
+  margin-right: 16px;
+  align-self: flex-start;
+}
+
+.instructions {
+  margin-bottom: 18px;
 }
 
 button, input[type=submit] {
+  -webkit-appearance: none;
   display: block;
   font-weight: bold;
   color: white;
@@ -12,9 +46,12 @@ button, input[type=submit] {
   border-radius: 6px;
   box-shadow: 2px 2px 8px #888888;
   border: none;
-  margin-bottom: 24px;
   outline: none;
   cursor: pointer;
+}
+
+.add-worker {
+  margin-bottom: 24px;
 }
 
 .worker-item {
@@ -92,7 +129,7 @@ button, input[type=submit] {
 }
 
 .current-expenditure {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   padding-left: 20px;
   margin-left: -10px;
 }
@@ -104,10 +141,15 @@ button, input[type=submit] {
 
 .action-buttons {
   display: flex;
+  margin-bottom: 8px;
 }
 
 .action-buttons input {
   margin-right: 8px;
+}
+
+.return {
+  margin-top: 24px;
 }
 
 .errors {
