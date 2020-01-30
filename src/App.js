@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import campaign from './campaign.png';
 
-const calculate = [
+const brackets = [
   {lowerBound: 0, upperBound: 25000, baseCost: 0, rate: 0},
   {lowerBound: 25001, upperBound: 50000, baseCost: 0, rate: .138},
   {lowerBound: 50001, upperBound: 75000, baseCost: 3450, rate: .169},
@@ -92,20 +92,22 @@ export default class App extends React.Component {
     const numberMatch = /^[0-9]+$/;
     if (currentExpenditure === "" || !currentExpenditure.match(numberMatch)) errors.add('Current expenditure must contain valid amount.');
     const projectedExpenditure = Object.keys(workerItems).reduce((acc, el) => {
-      if (workerItems[el].number === "" || !String(workerItems[el].number).match(numberMatch)) errors.add('Number of workers must contain valid number.');
-      if (workerItems[el].salary === "" || !workerItems[el].salary.match(numberMatch)) errors.add('Salary must contain valid amount.');
+      const currentWorker = workerItems[el];
+      if (currentWorker.number === "" || !String(currentWorker.number).match(numberMatch)) errors.add('Number of workers must contain valid number.');
+      if (currentWorker.salary === "" || !currentWorker.salary.match(numberMatch)) errors.add('Salary must contain valid amount.');
       let baseCost, rate, lowerBound;
-      for (let i = 0; i < calculate.length; i++) {
-        if ((workerItems[el].salary <= calculate[i].upperBound) && (workerItems[el].salary >= calculate[i].lowerBound)) {
-          baseCost = calculate[i].baseCost;
-          rate = calculate[i].rate;
-          lowerBound = calculate[i].lowerBound;
+      for (let i = 0; i < brackets.length; i++) {
+        const currentBracket = brackets[i];
+        if ((currentWorker.salary <= currentBracket.upperBound) && (currentWorker.salary >= currentBracket.lowerBound)) {
+          baseCost = currentBracket.baseCost;
+          rate = currentBracket.rate;
+          lowerBound = currentBracket.lowerBound;
           break;
         }
       }
-      totalPayroll += parseInt(workerItems[el].salary);
-      const percentage = workerItems[el].type === "Employee" ? .8 : 1;
-      return Math.round(acc + workerItems[el].number * (baseCost + (workerItems[el].salary - lowerBound) * percentage * rate));
+      totalPayroll += parseInt(currentWorker.salary);
+      const percentage = currentWorker.type === "Employee" ? .8 : 1;
+      return Math.round(acc + currentWorker.number * (baseCost + (currentWorker.salary - lowerBound) * percentage * rate));
     }, 0)
     if (errors.size) {
       this.setState({ errors: [...errors] })
@@ -144,7 +146,7 @@ export default class App extends React.Component {
           </div>
           {step === 1 &&
             <form onSubmit={this.handleSubmit}>
-              <div>
+              <div className="intro">
                 This a calculator to help you estimate how much you would save on your business's healthcare coverage expenses
                 under the NYHA compared to what you pay today.
               </div>
@@ -156,12 +158,14 @@ export default class App extends React.Component {
               {Object.keys(workerItems).map(k => {
                 return (
                   <div className="worker-item" key={k}>
-                    <input
-                      className="worker-number element"
-                      value={workerItems[k]['number']}
-                      onChange={this.handleFieldChange(k, 'number')}
-                      placeholder='#'
-                    />
+                    <div class="worker-number">
+                      <input
+                        className="element"
+                        value={workerItems[k]['number']}
+                        onChange={this.handleFieldChange(k, 'number')}
+                        placeholder='#'
+                      />
+                    </div>
                     <div className="worker-type">
                       <div className="element" onClick={this.handleOpenSelect(k)}>
                         <span className="select-value">{workerItems[k]['type']}</span><span>&#9660;</span>
@@ -174,18 +178,22 @@ export default class App extends React.Component {
                         </ul>
                       )}
                     </div>
-                    <span className="dollar-sign">$</span>
-                    <input
-                      className="worker-salary element"
-                      value={workerItems[k]['salary']}
-                      onChange={this.handleFieldChange(k, 'salary')}
-                      placeholder='Enter Salary'
-                    />
-                    {k !== '1' &&
-                      <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
-                        x
+                    <div className="worker-salary-item">
+                      <div>
+                        <span className="dollar-sign">$</span>
+                        <input
+                          className="worker-salary element"
+                          value={workerItems[k]['salary']}
+                          onChange={this.handleFieldChange(k, 'salary')}
+                          placeholder='Enter Salary'
+                        />
                       </div>
-                    }
+                      {k !== '1' &&
+                        <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
+                          x
+                        </div>
+                      }
+                    </div>
                   </div>
                 )
               })}
