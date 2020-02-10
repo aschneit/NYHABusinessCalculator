@@ -37,7 +37,6 @@
 
 button, input[type=submit] {
   -webkit-appearance: none;
-  display: block;
   font-weight: bold;
   color: white;
   padding: 6px 8px;
@@ -60,25 +59,19 @@ button, input[type=submit] {
   align-items: center;
 }
 
-.element {
+.worker-number, .worker-salary, .worker-type {
+  margin-right: 8px;
+}
+
+.worker-number input {
+  width: 32px;
+}
+
+.worker-type > div {
   border-radius: 3px;
   padding: 6px 8px;
   border: 1px solid black;
   font-size: 16px;
-  margin-right: 8px;
-}
-
-.dollar-sign {
-  position: relative;
-  left: 8px;
-}
-
-.worker-number .element {
-  width: 32px;
-  align-self: flex-start;
-}
-
-.worker-type .element {
   min-width: 135px;
   cursor: pointer;
   display: flex;
@@ -113,10 +106,8 @@ button, input[type=submit] {
   align-items: center;
 }
 
-.worker-salary {
+.worker-salary input {
   width: 175px;
-  padding-left: 20px;
-  margin-left: -10px;
 }
 
 .remove-worker {
@@ -135,8 +126,6 @@ button, input[type=submit] {
 
 .current-expenditure {
   margin-bottom: 32px;
-  padding-left: 20px;
-  margin-left: -10px;
 }
 
 .results div {
@@ -158,6 +147,7 @@ button, input[type=submit] {
 }
 
 .errors {
+  min-height: 50px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -169,13 +159,10 @@ button, input[type=submit] {
   .App {
     padding: 12px 24px;
   }
-  .element {
-    margin-right: 6px;
-  }
   .worker-type, .worker-number, .worker-salary-item {
     margin-top: 8px;
   }
-  .instructions, .intro, button, input[type=submit], .element {
+  .instructions, .intro, button, input[type=submit] {
     font-size: 14px;
   }
   h3 {
@@ -185,16 +172,17 @@ button, input[type=submit] {
     width: 200px;
     font-size: 14px;
   }
-  .worker-type .element, .dropdown li  {
+  .worker-type > div, .dropdown li  {
     min-width: 110px;
+    font-size: 14px;
   }
-  .worker-number .element {
+  .worker-number input {
     width: 16px;
   }
   .worker-item {
     flex-wrap: wrap;
   }
-  .worker-salary {
+  .worker-salary input {
     width: 150px;
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import StyledInput from './components/styled-input';
 import campaign from './campaign.png';
 
 const brackets = [
@@ -109,6 +110,7 @@ export default class App extends React.Component {
       const percentage = currentWorker.type === "Employee" ? .8 : 1;
       return Math.round(acc + currentWorker.number * (baseCost + (currentWorker.salary - lowerBound) * percentage * rate));
     }, 0)
+
     if (errors.size) {
       this.setState({ errors: [...errors] })
     } else {
@@ -158,16 +160,15 @@ export default class App extends React.Component {
               {Object.keys(workerItems).map(k => {
                 return (
                   <div className="worker-item" key={k}>
-                    <div class="worker-number">
-                      <input
-                        className="element"
+                    <div className="worker-number">
+                      <StyledInput
                         value={workerItems[k]['number']}
                         onChange={this.handleFieldChange(k, 'number')}
                         placeholder='#'
                       />
                     </div>
                     <div className="worker-type">
-                      <div className="element" onClick={this.handleOpenSelect(k)}>
+                      <div onClick={this.handleOpenSelect(k)}>
                         <span className="select-value">{workerItems[k]['type']}</span><span>&#9660;</span>
                       </div>
                       {workerItems[k].selectOpen && (
@@ -179,15 +180,13 @@ export default class App extends React.Component {
                       )}
                     </div>
                     <div className="worker-salary-item">
-                      <div>
-                        <span className="dollar-sign">$</span>
-                        <input
-                          className="worker-salary element"
-                          value={workerItems[k]['salary']}
-                          onChange={this.handleFieldChange(k, 'salary')}
-                          placeholder='Enter Salary'
-                        />
-                      </div>
+                      <StyledInput
+                        className="worker-salary"
+                        value={workerItems[k]['salary']}
+                        onChange={this.handleFieldChange(k, 'salary')}
+                        placeholder='Enter Salary'
+                        typeCharacter='$'
+                      />
                       {k !== '1' &&
                         <div className="remove-worker" onClick={this.handleRemoveWorker(k)}>
                           x
@@ -202,12 +201,12 @@ export default class App extends React.Component {
                 Please input an estimate of all expenses put toward employee healthcare annually (no commas or spaces).
                 Don't forget to incude costs of time spent on evaluation, administration and maintenance.
               </div>
-              <span className="dollar-sign">$</span>
-              <input
-                className="current-expenditure element"
+              <StyledInput
+                className="current-expenditure"
                 value={this.state.currentExpenditure}
                 onChange={this.handleExpenditure}
                 placeholder='Enter Expenditure'
+                typeCharacter='$'
               />
               <div className="action-buttons">
                 <input type="submit" value="Submit"/>
