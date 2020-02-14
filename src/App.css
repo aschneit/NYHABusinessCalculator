@@ -2,12 +2,14 @@
   padding: 50px 100px;
   background-color: #439d49;
   min-height: 100%;
+  font-size: 16px;
 }
 
 .content {
   background-color: white;
   padding: 24px;
   border-radius: 6px;
+  max-width: 1400px;
 }
 
 .header {

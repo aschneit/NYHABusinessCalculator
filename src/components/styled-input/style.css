@@ -21,7 +21,7 @@
 }
 
 @media only screen and (max-width: 736px) {
-  .styled-input input {
+  .styled-input input, .with-type-character {
     font-size: 14px;
   }
 }

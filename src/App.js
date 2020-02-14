@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import StyledInput from './components/styled-input';
-import campaign from './campaign.png';
+import campaign from './assets/campaign.png';
 
 const brackets = [
   {lowerBound: 0, upperBound: 25000, baseCost: 0, rate: 0},
@@ -137,7 +137,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const { workerItems, step, currentExpenditure, projectedExpenditure, totalPayroll, errors } = this.state;
     return (
       <div className="App">
@@ -149,7 +148,7 @@ export default class App extends React.Component {
           {step === 1 &&
             <form onSubmit={this.handleSubmit}>
               <div className="intro">
-                This a calculator to help you estimate how much you would save on your business's healthcare coverage expenses
+                This is a calculator to help you estimate how much you would save on your business's healthcare coverage expenses
                 under the NYHA compared to what you pay today.
               </div>
               <h3>I. Personnel Annual Salaries</h3>
