@@ -2,6 +2,9 @@ import React from 'react';
 import './App.css';
 import StyledInput from './components/styled-input';
 import campaign from './assets/campaign.png';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import { omit } from 'lodash';
 
 const brackets = [
   {lowerBound: 0, upperBound: 25000, baseCost: 0, rate: 0},
@@ -114,7 +117,13 @@ export default class App extends React.Component {
     if (errors.size) {
       this.setState({ errors: [...errors] })
     } else {
-      this.setState({ projectedExpenditure, totalPayroll, step: 2 })
+      this.setState({
+        projectedExpenditure,
+        totalPayroll,
+        savings: currentExpenditure - projectedExpenditure,
+        payrollTax: `${(projectedExpenditure / totalPayroll * 100).toFixed(2)}%`,
+        step: 2
+      })
     }
   }
 
@@ -136,8 +145,32 @@ export default class App extends React.Component {
     });
   }
 
+  handleExport = () => {
+    const { workerItems, totalPayroll, currentExpenditure, projectedExpenditure, payrollTax, savings } = this.state;
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const fileExtension = '.xlsx';
+    const csvData = Object.values(workerItems).map(item => omit(item, ['selectOpen']));
+    const ws = XLSX.utils.json_to_sheet(csvData);
+    ws['!cols'] = [{ width: 10 }, { width: 20 }, { width: 20 }];
+    XLSX.utils.sheet_add_json(ws, [{ '': '' }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ 'Total Payroll': `$${formatNumber(totalPayroll)}` }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ '': '' }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ 'Current Healthcare Expenditure': `$${formatNumber(currentExpenditure)}` }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ '': '' }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ 'Projected Expenditure': `$${formatNumber(projectedExpenditure)}` }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ '': '' }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ 'Savings': `$${formatNumber(savings)}` }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ '': '' }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ 'Payroll Tax': payrollTax }], { origin: -1 });
+    XLSX.utils.sheet_add_json(ws, [{ '': '' }], { origin: -1 });
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], {type: fileType});
+    FileSaver.saveAs(data, 'NYHA Business Results' + fileExtension);
+  }
+
   render() {
-    const { workerItems, step, currentExpenditure, projectedExpenditure, totalPayroll, errors } = this.state;
+    const { workerItems, step, currentExpenditure, projectedExpenditure, totalPayroll, savings, payrollTax, errors } = this.state;
     return (
       <div className="App">
         <div className="content">
@@ -225,9 +258,12 @@ export default class App extends React.Component {
               <div>Here's how much you currently spend on payroll annually: <b>{`$${formatNumber(totalPayroll)}`}</b></div>
               <div>Here's how much you currently spend on your business's healthcare coverage annually: <b>{`$${formatNumber(currentExpenditure)}`}</b></div>
               <div>Here's how much you would spend annually for your business's healthcare coverage under the NYHA: <b>{`$${formatNumber(projectedExpenditure)}`}</b></div>
-              <div>Here's how much you would save: <b>{`$${formatNumber(currentExpenditure - projectedExpenditure)}`}</b></div>
-              <div>Here's what your effective payroll tax for healthcare would be under the NYHA: <b>{`${(projectedExpenditure / totalPayroll * 100).toFixed(2)}%`}</b></div>
-              <button className="return" onClick={this.handleReturn}>Return to Form</button>
+              <div>Here's how much you would save: <b>{`$${formatNumber(savings)}`}</b></div>
+              <div>Here's what your effective payroll tax for healthcare would be under the NYHA: <b>{payrollTax}</b></div>
+              <div className="result-buttons">
+                <button className="return" onClick={this.handleReturn}>Return to Form</button>
+                <button className="export" onClick={this.handleExport}>Export</button>
+              </div>
             </div>
           }
         </div>

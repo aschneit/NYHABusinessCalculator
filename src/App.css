@@ -144,8 +144,13 @@ button, input[type=submit] {
   margin-right: 8px;
 }
 
-.return {
+.result-buttons {
+  display: flex;
+}
+
+.result-buttons button {
   margin-top: 24px;
+  margin-right: 8px;
 }
 
 .errors {
