@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/NYHABusinessCalculator/static/css/main.399f3665.chunk.css",
+    "main.js": "/NYHABusinessCalculator/static/js/main.c8d2a4d8.chunk.js",
+    "main.js.map": "/NYHABusinessCalculator/static/js/main.c8d2a4d8.chunk.js.map",
+    "runtime-main.js": "/NYHABusinessCalculator/static/js/runtime-main.01bac343.js",
+    "runtime-main.js.map": "/NYHABusinessCalculator/static/js/runtime-main.01bac343.js.map",
+    "static/js/2.219f707f.chunk.js": "/NYHABusinessCalculator/static/js/2.219f707f.chunk.js",
+    "static/js/2.219f707f.chunk.js.map": "/NYHABusinessCalculator/static/js/2.219f707f.chunk.js.map",
+    "index.html": "/NYHABusinessCalculator/index.html",
+    "precache-manifest.63225f63a1b87f1ae4cca68b30cfbf19.js": "/NYHABusinessCalculator/precache-manifest.63225f63a1b87f1ae4cca68b30cfbf19.js",
+    "service-worker.js": "/NYHABusinessCalculator/service-worker.js",
+    "static/css/main.399f3665.chunk.css.map": "/NYHABusinessCalculator/static/css/main.399f3665.chunk.css.map",
+    "static/js/2.219f707f.chunk.js.LICENSE": "/NYHABusinessCalculator/static/js/2.219f707f.chunk.js.LICENSE",
+    "static/media/campaign.png": "/NYHABusinessCalculator/static/media/campaign.07aa0cad.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.01bac343.js",
+    "static/js/2.219f707f.chunk.js",
+    "static/css/main.399f3665.chunk.css",
+    "static/js/main.c8d2a4d8.chunk.js"
+  ]
+}
