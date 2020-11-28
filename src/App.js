@@ -202,12 +202,15 @@ export default class App extends React.Component {
                     </div>
                     <div className="worker-type">
                       <div onClick={this.handleOpenSelect(k)}>
-                        <span className="select-value">{workerItems[k]['type']}</span><span>&#9660;</span>
+                        <span className="select-value">
+                          {`${workerItems[k]['type']} (${workerItems[k]['type'] === 'Employee' ? '80%' : '100%'})`}
+                        </span>
+                        <span>&#9660;</span>
                       </div>
                       {workerItems[k].selectOpen && (
                         <ul className="dropdown" onClick={this.handleTypeSelection(k)}>
-                          <li type="Employee">Employee</li>
-                          <li type="Owner">Owner</li>
+                          <li type="Employee">Employee (80%)</li>
+                          <li type="Owner">Owner (100%)</li>
                         </ul>
                       )}
                     </div>
