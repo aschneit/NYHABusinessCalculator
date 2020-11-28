@@ -99,7 +99,7 @@ export default class App extends React.Component {
     const projectedExpenditure = Object.keys(workerItems).reduce((acc, el) => {
       const currentWorker = workerItems[el];
       if (currentWorker.number === "" || !String(currentWorker.number).match(numberMatch)) errors.add('Number of workers must contain valid number.');
-      if (currentWorker.salary === "" || !currentWorker.salary.match(numberMatch)) errors.add('Salary must contain valid amount.');
+      if (currentWorker.salary === "" || !currentWorker.salary.match(numberMatch)) errors.add('Income must contain valid amount.');
       let baseCost, rate, lowerBound;
       for (let i = 0; i < brackets.length; i++) {
         const currentBracket = brackets[i];
@@ -167,7 +167,7 @@ export default class App extends React.Component {
     const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], {type: fileType});
-    FileSaver.saveAs(data, 'NYHA Business Results' + fileExtension);
+    FileSaver.saveAs(data, 'NY Health Act Business Results' + fileExtension);
   }
 
   render() {
@@ -183,13 +183,13 @@ export default class App extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <div className="intro">
                 This is a calculator to help you estimate how much you would save on your business's healthcare coverage expenses
-                under the NYHA compared to what you pay today.
+                under the NY Health Act compared to what you pay today.
               </div>
-              <h3>I. Personnel Annual Salaries</h3>
-              <div className="instructions">Please input all annual salaries for current personnel. Input the number of people
-              who are receiving the salary, choose type "Owner", or "Employee" from the drop-down menu,
-              and input the salary with no commas or spaces. Click "Add Worker" for additional salary entries.</div>
-              <button className="add-worker" onClick={this.handleAddWorker}>Add Worker</button>
+              <h3>I. Personnel Annual Income, Salaries, and Wages</h3>
+              <div className="instructions">Please enter all annual income for current personnel. Enter the number of people
+              who are receiving each income level, choose type "Owner", or "Employee" from the drop-down menu,
+              and enter the income with no commas or spaces. Click "Add Income Level" for additional entries.</div>
+            <button className="add-worker" onClick={this.handleAddWorker}>Add Income Level</button>
               {Object.keys(workerItems).map(k => {
                 return (
                   <div className="worker-item" key={k}>
@@ -216,7 +216,7 @@ export default class App extends React.Component {
                         className="worker-salary"
                         value={workerItems[k]['salary']}
                         onChange={this.handleFieldChange(k, 'salary')}
-                        placeholder='Enter Salary'
+                        placeholder='Enter Income'
                         typeCharacter='$'
                       />
                       {k !== '1' &&
@@ -230,7 +230,7 @@ export default class App extends React.Component {
               })}
               <h3>II. Current Annual Healthcare Expenditure</h3>
               <div className="instructions">
-                Please input an estimate of all expenses put toward employee healthcare annually (no commas or spaces).
+                Please enter an estimate of all expenses put toward employee healthcare annually (no commas or spaces).
                 Don't forget to incude costs of time spent on evaluation, administration and maintenance.
               </div>
               <StyledInput
@@ -257,9 +257,9 @@ export default class App extends React.Component {
             <div className="results">
               <div>Here's how much you currently spend on payroll annually: <b>{`$${formatNumber(totalPayroll)}`}</b></div>
               <div>Here's how much you currently spend on your business's healthcare coverage annually: <b>{`$${formatNumber(currentExpenditure)}`}</b></div>
-              <div>Here's how much you would spend annually for your business's healthcare coverage under the NYHA: <b>{`$${formatNumber(projectedExpenditure)}`}</b></div>
+              <div>Here's how much you would spend annually for your business's healthcare coverage under the NY Health Act: <b>{`$${formatNumber(projectedExpenditure)}`}</b></div>
               <div>Here's how much you would save: <b>{`$${formatNumber(savings)}`}</b></div>
-              <div>Here's what your effective payroll tax for healthcare would be under the NYHA: <b>{payrollTax}</b></div>
+              <div>Here's what your effective payroll tax for healthcare would be under the NY Health Act: <b>{payrollTax}</b></div>
               <div className="result-buttons">
                 <button className="return" onClick={this.handleReturn}>Return to Form</button>
                 <button className="export" onClick={this.handleExport}>Export</button>
