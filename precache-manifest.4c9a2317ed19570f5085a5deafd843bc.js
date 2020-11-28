@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "861a18e5f7ea48f4601fcf8240e0eba8",
+    "revision": "40057cb8b94c201d80dfa4e7332aa7ba",
     "url": "/NYHABusinessCalculator/index.html"
   },
   {
-    "revision": "129075573f32a8a19ce3",
+    "revision": "0d3ff618c39f073d49c2",
     "url": "/NYHABusinessCalculator/static/css/main.399f3665.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/NYHABusinessCalculator/static/js/2.219f707f.chunk.js.LICENSE"
   },
   {
-    "revision": "129075573f32a8a19ce3",
-    "url": "/NYHABusinessCalculator/static/js/main.b6a2b42b.chunk.js"
+    "revision": "0d3ff618c39f073d49c2",
+    "url": "/NYHABusinessCalculator/static/js/main.fc0babef.chunk.js"
   },
   {
     "revision": "3645cc5d3f10b2ad8be9",

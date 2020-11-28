@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/NYHABusinessCalculator/precache-manifest.7a91373c40753920586e34d680fee458.js"
+  "/NYHABusinessCalculator/precache-manifest.4c9a2317ed19570f5085a5deafd843bc.js"
 );
 
 self.addEventListener('message', (event) => {
