@@ -7,12 +7,12 @@ import * as XLSX from 'xlsx';
 import { omit } from 'lodash';
 
 const brackets = [
-  {lowerBound: 0, upperBound: 25000, baseCost: 0, rate: 0},
-  {lowerBound: 25001, upperBound: 50000, baseCost: 0, rate: .138},
-  {lowerBound: 50001, upperBound: 75000, baseCost: 3450, rate: .169},
-  {lowerBound: 75001, upperBound: 100000, baseCost: 7675, rate: .184},
-  {lowerBound: 100001, upperBound: 200000, baseCost: 12275, rate: .216},
-  {lowerBound: 200001, upperBound: Number.POSITIVE_INFINITY, baseCost: 33875, rate: .246}
+  {lowerBound: 0, upperBound: 24999, baseCost: 0, rate: 0},
+  {lowerBound: 25000, upperBound: 49999, baseCost: 0, rate: .138},
+  {lowerBound: 50000, upperBound: 74999, baseCost: 3450, rate: .169},
+  {lowerBound: 75000, upperBound: 99999, baseCost: 7675, rate: .184},
+  {lowerBound: 100000, upperBound: 199999, baseCost: 12275, rate: .216},
+  {lowerBound: 200000, upperBound: Number.POSITIVE_INFINITY, baseCost: 33875, rate: .246}
 ]
 
 const formatNumber = number => {
@@ -40,7 +40,7 @@ export default class App extends React.Component {
       step: 1,
       workerItemCount: 1,
       workerItems: {
-        1: { number: 1, type: 'Worker-Owner', salary: '', selectOpen: false }
+        1: { number: 1, type: 'Employee', salary: '', selectOpen: false }
       },
       currentExpenditure: "",
       projectedExpenditure: "",
@@ -54,7 +54,7 @@ export default class App extends React.Component {
       workerItemCount: this.state.workerItemCount + 1,
       workerItems: {
         ...this.state.workerItems,
-        [this.state.workerItemCount + 1]: { number: 1, type: 'Worker-Owner', salary: '', selectOpen: false }
+        [this.state.workerItemCount + 1]: { number: 1, type: 'Employee', salary: '', selectOpen: false }
       }
     });
   }
@@ -92,6 +92,7 @@ export default class App extends React.Component {
     this.setState({ errors: [] })
     const { workerItems, currentExpenditure } = this.state;
     let totalPayroll = 0;
+    let expenditureForPayrollTax = 0;
     let errors = new Set();
     const numberMatch = /^[0-9]+$/;
     if (currentExpenditure === "" || !currentExpenditure.match(numberMatch)) errors.add('Current expenditure must contain valid amount.');
@@ -111,9 +112,9 @@ export default class App extends React.Component {
       }
       totalPayroll += parseInt(currentWorker.salary);
       const percentage = currentWorker.type === "Employee" ? .8 : 1;
-      return Math.round(acc + currentWorker.number * (baseCost + (currentWorker.salary - lowerBound) * percentage * rate));
+      expenditureForPayrollTax += currentWorker.number * (baseCost + (currentWorker.salary - lowerBound) * rate);
+      return Math.round(acc + currentWorker.number * ((baseCost + (currentWorker.salary - lowerBound) * rate) * percentage));
     }, 0)
-
     if (errors.size) {
       this.setState({ errors: [...errors] })
     } else {
@@ -121,7 +122,7 @@ export default class App extends React.Component {
         projectedExpenditure,
         totalPayroll,
         savings: currentExpenditure - projectedExpenditure,
-        payrollTax: `${(projectedExpenditure / totalPayroll * 100).toFixed(2)}%`,
+        payrollTax: `${(expenditureForPayrollTax / totalPayroll * 100).toFixed(2)}%`,
         step: 2
       })
     }
@@ -137,7 +138,7 @@ export default class App extends React.Component {
     this.setState({
       workerItemCount: 1,
       workerItems: {
-        1: { number: 1, type: 'Worker-Owner', salary: '', selectOpen: false }
+        1: { number: 1, type: 'Employee', salary: '', selectOpen: false }
       },
       currentExpenditure: "",
       projectedExpenditure: "",
@@ -186,7 +187,7 @@ export default class App extends React.Component {
               </div>
               <h3>I. Personnel Annual Salaries</h3>
               <div className="instructions">Please input all annual salaries for current personnel. Input the number of people
-              who are receiving the salary, choose type "Worker-Owner", "Owner", or "Employee" from the drop-down menu,
+              who are receiving the salary, choose type "Owner", or "Employee" from the drop-down menu,
               and input the salary with no commas or spaces. Click "Add Worker" for additional salary entries.</div>
               <button className="add-worker" onClick={this.handleAddWorker}>Add Worker</button>
               {Object.keys(workerItems).map(k => {
@@ -205,7 +206,6 @@ export default class App extends React.Component {
                       </div>
                       {workerItems[k].selectOpen && (
                         <ul className="dropdown" onClick={this.handleTypeSelection(k)}>
-                          <li type="Worker-Owner">Worker-Owner</li>
                           <li type="Employee">Employee</li>
                           <li type="Owner">Owner</li>
                         </ul>
