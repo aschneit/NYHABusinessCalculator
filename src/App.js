@@ -262,7 +262,7 @@ export default class App extends React.Component {
               <div>Here's how much you currently spend on your business's healthcare coverage annually: <b>{`$${formatNumber(currentExpenditure)}`}</b></div>
               <div>Here's how much you would spend annually for your business's healthcare coverage under the NY Health Act: <b>{`$${formatNumber(projectedExpenditure)}`}</b></div>
               <div>Here's how much you would save: <b>{`$${formatNumber(savings)}`}</b></div>
-              <div>Here's what your effective tax rate for healthcare would be under the NY Health Act: <b>{payrollTax}</b></div>
+              <div>Here's what the effective tax rate for healthcare would be under the NY Health Act: <b>{payrollTax}</b></div>
               <div className="result-buttons">
                 <button className="return" onClick={this.handleReturn}>Return to Form</button>
                 <button className="export" onClick={this.handleExport}>Export</button>
