@@ -110,7 +110,7 @@ export default class App extends React.Component {
           break;
         }
       }
-      totalPayroll += parseInt(currentWorker.salary);
+      totalPayroll += parseInt(currentWorker.salary) * currentWorker.number;
       const percentage = currentWorker.type === "Employee" ? .8 : 1;
       expenditureForPayrollTax += currentWorker.number * (baseCost + (currentWorker.salary - lowerBound) * rate);
       return Math.round(acc + currentWorker.number * ((baseCost + (currentWorker.salary - lowerBound) * rate) * percentage));
